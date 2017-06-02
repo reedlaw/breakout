@@ -52,6 +52,7 @@ int main(int argc, char * argv[]) {
   Breakout.State = GAME_ACTIVE;
 
   GLint movement = 0; // -1 for left, 0 for none, 1 for right
+  GLboolean action = false;
 
   // Rendering Loop
   while (glfwWindowShouldClose(mWindow) == false) {
@@ -67,6 +68,9 @@ int main(int argc, char * argv[]) {
     if ((glfwGetKey(mWindow, GLFW_KEY_LEFT) != GLFW_PRESS) && (glfwGetKey(mWindow, GLFW_KEY_RIGHT) != GLFW_PRESS))
       movement = 0;
 
+    if (glfwGetKey(mWindow, GLFW_KEY_SPACE) == GLFW_PRESS)
+      action = true;
+
     glfwPollEvents();
         
     // Calculate delta time
@@ -75,7 +79,7 @@ int main(int argc, char * argv[]) {
     lastFrame = currentFrame;
         
     // Manage user input
-    Breakout.ProcessInput(deltaTime, movement);
+    Breakout.ProcessInput(deltaTime, movement, action);
 
     // Update Game state
     Breakout.Update(deltaTime);
